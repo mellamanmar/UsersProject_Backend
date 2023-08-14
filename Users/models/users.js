@@ -1,3 +1,4 @@
+const { error } = require("console");
 const { mongoose } = require("mongoose");
 
 const Schema = mongoose.Schema
@@ -14,10 +15,15 @@ const UserSchema = new Schema ({
         minlength: 6
     },
     //Columna para asignar el tipo de usuario al crearlo
-    userType: {
-        type: ['admin', 'user'],
-        require: true
-    }
+    // userType: (type) => {
+    //     if (type === 'admin') {
+    //         return userType = 'admin'
+    //     } else {
+    //         if (type === 'user') {
+    //             return userType = 'user'
+    //         } else (console.error('Type is not valid'))
+    //     }
+    // }
 })
 
 module.exports = mongoose.model('User', UserSchema);
