@@ -2,16 +2,20 @@ const express = require ("express");
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
 const cors = require ('cors');
+const userRouter = require ('./Users/routers/auth')
 
 
 const app = express()
 const port = 3000
 
 
-//middlewares
+//Middlewares
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use (cors())
+
+//Routes
+app.use ('/api', userRouter)
 
 app.listen (port, () =>  {
   console.log(`Mi puerto es ${port}`)
