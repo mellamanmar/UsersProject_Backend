@@ -1,5 +1,5 @@
 // Importar el modelo de Post
-const Post = require('../models/Post');
+const Post = require('./Post');
 
 // Función para obtener todas las publicaciones
 const getPosts = async (req, res) => {
