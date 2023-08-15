@@ -1,4 +1,4 @@
-const { mongoose } = require("mongoose");
+const { mongoose, trusted } = require("mongoose");
 const { express } = require("express");
 // const { Joi } = require("joi");
 const Schema = mongoose.Schema;
@@ -8,7 +8,7 @@ const UserSchema = new Schema ({
     email: {
         type: String,
         require: true,
-        unique: false
+    
     },
     //Nombre de usuario
     username: {
