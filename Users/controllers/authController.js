@@ -1,16 +1,20 @@
 const User = require ('../models/users')
 
-const controllerUser = {
+const controllerAuth = {
     test: (req, res) => {
         res.send('Hello world')
     },
 
     get: async (req, res) => {
         try {
-            const email = await controllerUser.find({})
+            const email = await User.find({})
+            const username = await User.find({})
+            const userType = await User.find({})
         
         res.json (
-            email
+            email,
+            username,
+            userType,
         )
         } catch (error) {
             return res.status(500).json({msg:error.message})
@@ -20,10 +24,12 @@ const controllerUser = {
     signUp: async (req, res) => {
         try {
             const email = req.body.email
+            const username = req.body.username
             const password = req.body.password
             const userType = req.body.userType
             await User.create ({
                 email : email,
+                username : username,
                 password : password,
                 userType : userType,
             })
@@ -34,4 +40,4 @@ const controllerUser = {
     },
 }
 
-module.exports = controllerUser
+module.exports = controllerAuth

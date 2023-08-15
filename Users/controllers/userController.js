@@ -1,44 +1,56 @@
 // Importar el modelo de User
-const User = require('../models/User');
+const User = require('../models/users');
 
-// Función para obtener el perfil de un usuario
-const getUserProfile = async (req, res) => {
-    try {
-        const userId = req.userId;
 
-        // Buscar el perfil del usuario en la base de datos por su ID
-        const userProfile = await User.findByPk(userId, { attributes: ['id', 'username'] });
-        if (!userProfile) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
+const controllerUser = {
+    // Función para obtener el perfil de un usuario
+    getUserProfile : async (req, res) => {
+        try {
+            const {id} = req.params
+            const email = await User.findById(id)
+            const username = await User.findById(id)
+            const password = await User.findById(id)
+            res.json(
+                email,
+                username,
+                password
+            )
+        } catch (error){
+            res.status(500).json({ msg: 'Error al obtener el perfil del usuario' })
         }
-
-        res.status(200).json(userProfile);
-    } catch (error) {
-        res.status(500).json({ message: 'Error al obtener el perfil del usuario' });
-    }
-};
+},
 
 // Función para editar el perfil de un usuario
-const editUserProfile = async (req, res) => {
-    try {
-        const userId = req.userId;
-        const { newUsername } = req.body;
-
-        // Buscar al usuario en la base de datos por su ID
-        const user = await User.findByPk(userId);
-        if (!user) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
+    editUserProfile : async (req, res) => {
+        try {
+            const {id} = req.params
+            const username = req.body.username
+            const password = req.body.password
+            await User.findByIdAndUpdate(id,{
+                username : username,
+                password : password
+            })
+            res.json({msg:'Usuario actualizado con éxito'})
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ msg: 'Error al actualizar el perfil del usuario' });
         }
+},
 
-        // Actualizar el nombre de usuario y guardar los cambios en la base de datos
-        user.username = newUsername;
-        await user.save();
+// Eliminar perfil de un usuario
+    deleteUserProfile : async (req, res) => {
+        try {
+            const {id} = req.params
+            await User.findByIdAndDelete(id)
+            res.json({msg:'Perfil eliminado con éxito'})
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({msg:error.message})
+        }
+    },
+    
+}
 
-        res.status(200).json({ message: 'Perfil de usuario actualizado con éxito' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error al actualizar el perfil del usuario' });
-    }
-};
 
 // Exportar las funciones del controlador para usarlas en otros archivos
-module.exports = { getUserProfile, editUserProfile };
+module.exports = { controllerUser };
