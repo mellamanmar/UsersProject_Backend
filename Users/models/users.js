@@ -1,15 +1,14 @@
-const { error } = require("console");
 const { mongoose } = require("mongoose");
 const { express } = require("express");
-const { Joi } = require("joi");
+// const { Joi } = require("joi");
 const Schema = mongoose.Schema;
-const type = [{value : 'user'}, {value: 'admin'}]
 
 const UserSchema = new Schema ({
+    //Email registrado
     email: {
         type: String,
         require: true,
-        unique: true
+        unique: false
     },
     //Nombre de usuario
     username: {

@@ -1,4 +1,5 @@
 const User = require ('../models/users')
+const jwt = require ('jsonwebtoken')
 
 const controllerAuth = {
     test: (req, res) => {
@@ -23,20 +24,28 @@ const controllerAuth = {
 
     signUp: async (req, res) => {
         try {
-            const email = req.body.email
-            const username = req.body.username
-            const password = req.body.password
-            const userType = req.body.userType
-            await User.create ({
-                email : email,
-                username : username,
-                password : password,
-                userType : userType,
-            })
-            res.json({msg:'Created'})
+            const {email, username, password, userType} = req.body
+            const newUser = new User({email, username, password, userType})
+            await newUser.save()
+            
+            const token = jwt.sign({id: newUser.id}, 'secretkey')
+            res.status(200).json({token})
+
         } catch (error) {
             return res.status(500).json ({msg:error.message})
             }
+            
+    },
+
+    signIn: async (req, res) => {
+        const { username, password } = req.body
+        const user = await User.findOne({username})
+
+        if (!user) return res.status(401).send("El nombre de usuario no es válido")
+        if (user.password !== password) return res.status(401).send("Contraseña incorrecta")
+
+        const token = jwt.sign({id: user.id}, 'secretkey')
+        return res.status(200).json({token})  
     },
 }
 
