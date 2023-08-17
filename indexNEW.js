@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
 const cors = require ('cors');
 const userRouter = require ('./Users/routers/routes')
+const forumRouter = require('./Forum/routers/forum')
 
 
 const app = express()
@@ -16,6 +17,7 @@ app.use (cors())
 
 //Routes
 app.use ('/api', userRouter)
+app.use('/api/forum', forumRouter)
 
 app.listen (port, () =>  {
   console.log(`Mi puerto es ${port}`)

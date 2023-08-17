@@ -1,19 +1,23 @@
-// Importar Sequelize y la instancia de sequelize
-const Sequelize = require('sequelize');
-const sequelize = require('../db'); // este es el archivo que importa y configura la conexión a la base de datos
+const { mongoose, trusted } = require("mongoose");
 
-// Definir el modelo de datos para los posts
-const Post = sequelize.define('post', {
+const Schema = mongoose.Schema;
+
+const PostSchema = new Schema({
     title: {
-        type: Sequelize.STRING,
+        type: String,
         allowNull: false,
     },
     content: {
-        type: Sequelize.TEXT,
+        type: String,
         allowNull: false,
     },
-    username: 
+    username: {
+        type: Schema.Types.ObjectId, 
+        ref: "User", 
+        require: true
+    },
 });
 
+
 // Exportar el modelo para su uso en otras partes de la aplicación
-module.exports = Post;
+module.exports = mongoose.model('Post', PostSchema);
