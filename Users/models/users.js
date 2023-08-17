@@ -8,13 +8,14 @@ const UserSchema = new Schema ({
     email: {
         type: String,
         require: true,
+        unique:true
     
     },
     //Nombre de usuario
     username: {
         type: String,
         require: true,
-        unique: true
+        unique:true
     },
     //Contraseña mínimo 6 caracteres
     password: {
