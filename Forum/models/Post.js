@@ -5,16 +5,19 @@ const Schema = mongoose.Schema;
 const PostSchema = new Schema({
     title: {
         type: String,
-        allowNull: false,
+        require: true,
+        minlength: 6
     },
     content: {
         type: String,
-        allowNull: false,
+        require: true,
+        minlength: 20
     },
     username: {
-        type: Schema.Types.ObjectId, 
-        ref: "User", 
-        require: true
+        type:String,
+        // type: Schema.Types.ObjectId, 
+        // ref: "User", 
+        require: true,
     },
 });
 
