@@ -24,7 +24,7 @@ app.listen (port, () =>  {
 })
 
 try {
-  mongoose.connect('mongodb+srv://marimelissamc:1357913579@cluster0.paodnfx.mongodb.net/')
+  mongoose.connect(process.env.MONNGO_DB_URI)
 } catch(error) {
   console.log(error)
 }
