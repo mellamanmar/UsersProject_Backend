@@ -15,10 +15,14 @@ const PostSchema = new Schema({
     },
     username: {
         type:String,
-        // type: Schema.Types.ObjectId, 
-        // ref: "User", 
+        ref: 'User',
         require: true,
     },
+    // user: {
+    //     ref: 'User', // Hace referencia al modelo de usuarios
+    //     type: mongoose.Schema.Types.ObjectId, // Almacenarás el _id del usuario
+    //     required: true,
+    // }
 });
 
 
