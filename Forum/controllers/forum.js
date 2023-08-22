@@ -1,6 +1,6 @@
 // Importar el modelo de Post
 const Post = require('../models/Post');
-const users = require('c:/Users/Gyna/Desktop/Bootcamp/FullStack/Libreria/UsersProject_Backend/Users/models/users');
+const users = require('../../Users/models/users');
 
 // Función para obtener todas las publicaciones
 const controllerForum ={
