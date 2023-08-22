@@ -15,19 +15,19 @@ const controllerForum ={
     }
     },
    
-    getPostsByUsername: async (req,res) =>{
-    try {
-        const username = req.params.username
-        // const userExists= await User.exists({username});
-        // if (!userExists) {
-        //   return res.status(400).json({ message: 'Username does not exist' });
-        //  }
-        const posts = await Post.filter(username1 => username1===username)
+    getPostsByUsername: async (req,res) =>{     
+    let username = req.params.username;
+    try{
+    
+        const posts=await Post.find({ username: username });
         return res.json(posts)
-    } catch (error) {
-        return res.status(500).json({ message: 'Error al obtener las publicaciones' })              
-    }
+        } 
+        catch (error) {
+            return res.status(500).json({ message: 'Error al obtener las publicaciones' })              
+        }
     },
+   
+    
 
 // Función para crear una nueva publicación
     createPost :async (req, res) => {
@@ -35,10 +35,6 @@ const controllerForum ={
         const title= req.body.title
         const content= req.body.content
         const username = req.body.username
-        // const userExists= await User.exists({username});
-        // if (!userExists) {
-        //   return res.status(400).json({ message: 'Username does not exist' });
-        //  }
         await Post.create({
             title:title,
             content:content, 
@@ -65,7 +61,7 @@ const controllerForum ={
     }
     }
    
-}
+} 
 
 // Exportar las funciones del controlador para usarlas en otros archivos
 module.exports = controllerForum;
