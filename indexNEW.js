@@ -30,14 +30,9 @@ app.listen (port, () =>  {
   console.log(`Mi puerto es ${port}`)
 })
 
-try {
-  mongoose.connect(process.env.MONNGO_DB_URI)
-} catch(error) {
-  console.log(error)
-}
-finally {
-  console.log('connected to db')
-}
+mongoose.connect(process.env.MONGO_DB_URI)
+.then(() => console.log('connected to db'))
+.catch((err)=> console.log(err)) 
 
 app.get('/',(req,res) => {
   res.send('Connected')
