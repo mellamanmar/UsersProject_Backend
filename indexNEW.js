@@ -2,6 +2,7 @@ const express = require ("express");
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
 const cors = require ('cors');
+require('dotenv').config();
 const userRouter = require ('./Users/routers/routes')
 const forumRouter = require('./Forum/routers/forum')
 
@@ -29,10 +30,6 @@ app.listen (port, () =>  {
   console.log(`Mi puerto es ${port}`)
 })
 
-app.get('/',(req,res) => {
-  res.send('Connected')
-})
-
 try {
   mongoose.connect(process.env.MONNGO_DB_URI)
 } catch(error) {
@@ -41,3 +38,7 @@ try {
 finally {
   console.log('connected to db')
 }
+
+app.get('/',(req,res) => {
+  res.send('Connected')
+})
