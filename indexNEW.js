@@ -23,6 +23,10 @@ app.listen (port, () =>  {
   console.log(`Mi puerto es ${port}`)
 })
 
+app.get('/',(req,res) => {
+  res.send('Connected')
+})
+
 try {
   mongoose.connect(process.env.MONNGO_DB_URI)
 } catch(error) {
