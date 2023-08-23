@@ -13,7 +13,13 @@ const port = 3000
 //Middlewares
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use (cors())
+app.use(cors({
+  origin:"*",
+  methods:"GET,HEAD,POST,PATCH,PUT,DELETE",
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+}))
 
 //Routes
 app.use ('/api', userRouter)
