@@ -18,7 +18,7 @@ const controllerForum ={
             await Post.create({
                 username:username,
                 title:title,
-                content:content, 
+                content:content
                 // user:user._id,    
             })
     

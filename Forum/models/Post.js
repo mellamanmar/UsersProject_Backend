@@ -13,19 +13,19 @@ const PostSchema = new Schema({
         require: true,
         minlength: 20
     },
-    // username: {
-    //     type:String,
-    //     ref: 'User',
-    //     require: true,
-    // },
+    username: {
+        type:String,
+        ref: 'User',
+        require: true,
+    }
     
-    user: {
-        ref: 'User', // Hace referencia al modelo de usuarios
-        type: mongoose.Schema.Types.ObjectId, // Almacenarás el _id del usuario
-        required: true,
-    },
+    // user: {
+    //     ref: 'User', // Hace referencia al modelo de usuarios
+    //     type: mongoose.Schema.Types.ObjectId, // Almacenarás el _id del usuario
+    //     required: true,
+    // }
 
-    versionKey:false
+    // versionKey:false
 });
 
 

@@ -1,5 +1,6 @@
 const User = require ('../models/users')
-const jwt = require ('jsonwebtoken')
+const tokenSign = require('../../middlewares/generateToken')
+const jwt = require('jsonwebtoken')
 
 const controllerAuth = {
     test: (req, res) => {
@@ -29,7 +30,8 @@ const controllerAuth = {
             await newUser.save()
             
             const token = jwt.sign({id: newUser.id}, 'secretkey')
-            res.status(200).json({token})
+            
+            res.status(200).json( {token})
 
         } catch (error) {
             return res.status(500).json ({msg:error.message})
@@ -38,15 +40,21 @@ const controllerAuth = {
     },
 
     signIn: async (req, res) => {
+        try{
         const { username, password } = req.body
         const user = await User.findOne({username})
 
-        if (!user) return res.status(401).send("El nombre de usuario no es válido")
-        if (user.password !== password) return res.status(401).send("Contraseña incorrecta")
-
-        const token = jwt.sign({id: user.id}, 'secretkey')
-        return res.status(200).json({token})  
-    },
+        if (!user) {return res.status(401).send("El nombre de usuario no es válido")}
+        if (user.password !== password) {return res.status(401).send("Contraseña incorrecta")}
+    
+        const token = jwt.sign({id: user.id, role:user.userType}, 'secretkey')
+        res.status(200).json({data:user, token})
+        }
+        catch{
+        return res.status(500).json({msg:error.message})}
+        
+    }
+    
 }
 
 module.exports = controllerAuth
