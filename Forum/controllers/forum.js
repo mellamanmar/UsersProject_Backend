@@ -16,9 +16,8 @@ const controllerForum ={
             //     return res.status(404).json({error:'this action is not possible'});
             // }
             await Post.create({
-                username:username,
                 title:title,
-                content:content
+                content:content, 
                 // user:user._id,    
             })
     
