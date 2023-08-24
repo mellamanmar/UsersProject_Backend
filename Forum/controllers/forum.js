@@ -66,6 +66,25 @@ const controllerForum = {
         }
     },
 
+    // Función para editar una publicación
+    editPost: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { title, content } = req.body;
+
+            // Buscar la publicación por su ID y actualizar sus campos
+            const updatedPost = await Post.findByIdAndUpdate(id, { title, content }, { new: true });
+
+            if (!updatedPost) {
+                return res.status(404).json({ message: 'Post not found' });
+            }
+
+            res.status(200).json({ message: 'Post updated', post: updatedPost });
+        } catch (error) {
+            res.status(500).json({ message: 'Error updating post' });
+        }
+    },
+
     // Función para eliminar una publicación
     deletePost: async (req, res) => {
         try {

@@ -11,6 +11,7 @@ router.get ('/:username', controllerForum.getPostsByUsername)
 router.get ('/posts/:id', controllerForum.getPostsById)
 router.post ('/create', controllerForum.createPost) // Ruta para crear una nueva publicación, con verificación de token
 router.delete('/delete/:id', checkRoleAuth ('Admin') , controllerForum.deletePost) // Ruta para eliminar una publicación, con verificación de token y
+router.put('/edit/:id', checkRoleAuth('Admin'), controllerForum.editPost);  // Ruta para editar una publicación
 
 // Exportar el enrutador para su uso en otros archivos
 module.exports = router;
