@@ -37,7 +37,7 @@ const controllerForum ={
         return res.status(500).json({ message: 'Error al obtener las publicaciones' });
     }
     },
-   
+
     getPostsByUsername: async (req,res) =>{     
     let username = req.params.username;
     try{
@@ -49,10 +49,6 @@ const controllerForum ={
             return res.status(500).json({ message: 'Error al obtener las publicaciones' })              
         }
     },
-   
-    
-
-
     
 
 // Función para eliminar una publicación
@@ -68,7 +64,7 @@ const controllerForum ={
         res.status(500).json({ message: 'Error deleting post' });
     }
     }
-   
+
 } 
 
 // Exportar las funciones del controlador para usarlas en otros archivos
