@@ -1,14 +1,15 @@
 const userModel = require('./../Users/models/users')
+const verifyToken = require('./generateToken')
 
 const checkRoleAuth = (roles) => async (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ').pop() //TODO: 231231321
         const tokenData = await verifyToken(token)
-        const userData = await userModel.findById(tokenData._id) //TODO: 696966
-
+        const userData = await userModel.findById(tokenData.id) //TODO: 696966
+       
         //TODO ['admin'].includes('user')
     
-        if ([].concat(roles).includes(userData.userType)) { //TODO:
+        if (['admin'].concat(roles).includes(userData.userType)) { //TODO:
             next()
         } else {
             res.status(409)

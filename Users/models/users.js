@@ -26,9 +26,9 @@ const UserSchema = new Schema ({
         type: String,
         require: true,
         enum: ['admin', 'user']
-    },
+    }
 
-    versionKey:false
+    // versionKey:false
 })
 
 module.exports = mongoose.model('User', UserSchema);

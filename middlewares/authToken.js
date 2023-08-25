@@ -1,22 +1,24 @@
-// Importar la librería JSON Web Tokens (jwt)
-const jwt = require('jsonwebtoken');
+const verifyToken = require('./generateToken')
 
-// Middleware de autenticación
-const authMiddleware = (req, res, next) => {
-    const token = req.headers.authorization; // Obtener el token del encabezado de la solicitud
-
-    if (!token) {
-        return res.status(401).json({ message: 'Acceso no autorizado' });
-    }
-
+const checkAuth = async (req, res, next) => {
     try {
-        const decodedToken = jwt.verify(token, 'mi_secreto'); // Verificar y decodificar el token utilizando la clave secreta
-        req.userId = decodedToken.userId; // Agregar el ID del usuario decodificado a la solicitud
-        next(); // Continuar con la siguiente función de middleware o ruta
-    } catch (error) {
-        return res.status(401).json({ message: 'Token inválido' });
-    }
-};
+        //TODO: authorization: Bearer 1010101010101001010100 
+        const token = req.headers.authorization.split(' ').pop() //TODO:123123213
+        const tokenData = await verifyToken(token)
+        if (tokenData.id) {
+            next()
+        } else {
+            res.status(409)
+            res.send({ error: 'Acceso' })
+        }
+        res
 
-// Exportar el middleware para su uso en otras partes de la aplicación
-module.exports = authMiddleware;
+    } catch (e) {
+        console.log(e)
+        res.status(409)
+        res.send({ error: 'Acceso denegado' })
+    }
+
+}
+
+module.exports = checkAuth
