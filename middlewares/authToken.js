@@ -9,7 +9,7 @@ const checkAuth = async (req, res, next) => {
             next()
         } else {
             res.status(409)
-            res.send({ error: 'Acceso' })
+            res.send({ error: 'Acceso denegado' })
         }
         res
 
