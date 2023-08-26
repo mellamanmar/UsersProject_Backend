@@ -27,7 +27,7 @@ const checkAuth = async (req, res, next) => {
         //TODO: authorization: Bearer 1010101010101001010100 
         const token = req.headers.authorization.split(' ').pop() //TODO:123123213
         const tokenData = await verifyToken(token)
-        if (tokenData._id) {
+        if (tokenData.username) {
             next()
         } else {
             res.status(409)
