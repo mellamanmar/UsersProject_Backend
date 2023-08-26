@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken') //TODO : 😎
+require('dotenv').config();
+
 
 const verifyToken = async (token) => {
     try {
