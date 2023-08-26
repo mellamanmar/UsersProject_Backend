@@ -30,4 +30,4 @@ const generateSign = async (user) => {
 //     return jwt.decode(token, null)
 // }
 
-module.exports = {verifyToken, decodeSign, generateSign}
+module.exports = {verifyToken, generateSign}
