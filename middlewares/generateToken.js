@@ -11,7 +11,7 @@ const verifyToken = async (token) => {
     }
 }
 
-const generateSign = (user) => {
+const generateSign = async (user) => {
     try {
         const token = jwt.sign ({
             username: user.username,
