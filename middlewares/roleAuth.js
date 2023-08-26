@@ -6,7 +6,7 @@ const checkRoleAuth = (roles) => async (req, res, next) => {
         const token = req.headers.authorization.split(' ').pop() //TODO: 231231321
         const tokenData = await verifyToken(token)
         const userData = await userModel.findById(tokenData.id) //TODO: 696966
-       
+
         //TODO ['admin'].includes('user')
     
         if (['admin'].concat(roles).includes(userData.userType)) { //TODO:
