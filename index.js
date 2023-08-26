@@ -6,6 +6,7 @@ require('dotenv').config();
 const userRouter = require ('./Users/routers/routes')
 const forumRouter = require('./Forum/routers/forum')
 const checkToken = require('./middlewares/checkToken')
+const checkAuth = require('./middlewares/authToken')
 
 
 const app = express()
@@ -25,7 +26,7 @@ app.use(cors({
 
 //Routes
 app.use ('/api', userRouter)
-app.use('/api/forum',checkToken, forumRouter)
+app.use('/api/forum', checkAuth, forumRouter)
 
 app.listen (port, () =>  {
   console.log(`Mi puerto es ${port}`)
