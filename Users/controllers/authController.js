@@ -1,6 +1,8 @@
 const User = require ('../models/users')
 const tokenSign = require('../../middlewares/generateToken')
 const jwt = require('jsonwebtoken')
+require('dotenv').config();
+
 
 const controllerAuth = {
     test: (req, res) => {
@@ -29,7 +31,7 @@ const controllerAuth = {
             const newUser = new User({email, username, password, userType})
             await newUser.save()
             
-            const token = jwt.sign({id: newUser.id}, 'secretkey')
+            const token = jwt.sign({id: newUser.id}, process.env.JWT_SECRET)
             
             res.status(200).json( {token})
 
@@ -47,7 +49,7 @@ const controllerAuth = {
         if (!user) {return res.status(401).send("El nombre de usuario no es válido")}
         if (user.password !== password) {return res.status(401).send("Contraseña incorrecta")}
     
-        const token = jwt.sign({id: user.id, role:user.userType}, 'secretkey')
+        const token = jwt.sign({id: user.id, role:user.userType}, process.env.JWT_SECRET)
         res.status(200).json({data:user, token})
         }
         catch{
