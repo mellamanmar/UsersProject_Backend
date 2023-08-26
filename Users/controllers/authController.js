@@ -1,7 +1,6 @@
 const User = require ('../models/users')
-const tokenSign = require('../../middlewares/generateToken')
-const jwt = require('jsonwebtoken')
-require('dotenv').config();
+const generateSign = require('../../middlewares/generateToken')
+const {} = require ('')
 
 
 const controllerAuth = {
@@ -30,13 +29,11 @@ const controllerAuth = {
             const {email, username, password, userType} = req.body
             const newUser = new User({email, username, password, userType})
             await newUser.save()
-            
-            const token = jwt.sign({id: newUser.id}, process.env.JWT_SECRET)
-            
-            res.status(200).json( {token})
+
+            res.send({data: newUser})
 
         } catch (error) {
-            return res.status(500).json ({msg:error.message})
+            return res.status(500).json ({msg:'error al crear el usuario'})
             }
             
     },
@@ -48,15 +45,23 @@ const controllerAuth = {
 
         if (!user) {return res.status(401).send("El nombre de usuario no es válido")}
         if (user.password !== password) {return res.status(401).send("Contraseña incorrecta")}
-    
-        const token = jwt.sign({id: user.id, role:user.userType}, process.env.JWT_SECRET)
-        res.status(200).json({data:user, token})
-        }
-        catch{
-        return res.status(500).json({msg:error.message})}
+            const tokenObject = {
+                token: await generateSign(user),
+                expire: today.add(12, 'hours').format('DD MM YYYY HH:MM:SS')
+            }
+            res.send({ 
+                data: user, tokenObject})
+        // const token = jwt.sign({id: user.id, role:user.userType}, process.env.JWT_SECRET)
+        // res.status(200).json({data:user, token})
+        // }
+        // catch{
+        // return res.status(500).json({msg:error.message})}
         
-    }
+        } catch (error) {
+            console.log (error)
+        }
     
+    }
 }
 
 module.exports = controllerAuth
