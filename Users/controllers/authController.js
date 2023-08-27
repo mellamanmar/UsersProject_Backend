@@ -29,14 +29,11 @@ const controllerAuth = {
         try {
             const {email, username, password, userType} = req.body
             const newUser = new User({email, username, password, userType})
-            await newUser.save()
-            
-            const token = jwt.sign({id: newUser.id}, process.env.JWT_SECRET)
-            
-            res.status(200).json( {token})
-
+            await newUser.save();
+            const newUserObject = res.json ({ user: newUser, token: createToken(newUser) })
+            return newUserObject
         } catch (error) {
-            return res.status(500).json ({msg:error.message})
+            return res.status(500).json ({msg:"No es posible crear el usuario"})
             }
             
     },
@@ -58,5 +55,11 @@ const controllerAuth = {
     }
     
 }
+
+function createToken(user) {
+    const payload = { user_id: user._id, user_role: user.userType}
+    return jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '12h'})
+}
+
 
 module.exports = controllerAuth
