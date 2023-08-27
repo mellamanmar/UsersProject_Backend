@@ -1,8 +1,6 @@
 const User = require ('../models/users')
-const tokenSign = require('../../middlewares/generateToken')
+const moment = require('moment')
 const jwt = require('jsonwebtoken')
-require('dotenv').config();
-
 
 const controllerAuth = {
     test: (req, res) => {
@@ -53,6 +51,14 @@ const controllerAuth = {
         return res.status(500).json({msg:'Debe registrarse'})}
         
     }
+}
+
+function generateSign (user) {
+    const payload = {
+        user_username : user.username,
+        user_password : user.password
+        }
+    return jwt.sign(payload, process.env.JWT_SECRET)
     
 }
 
