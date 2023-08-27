@@ -19,4 +19,4 @@ const checkToken = (req, res, next) => {
     next ();
 }
 
-module.exports = {checkToken}
+module.exports = checkToken
