@@ -43,20 +43,21 @@ const controllerAuth = {
         const { username, password, userType } = req.body
         const user = await User.findOne({username})
 
-        if (!user) {return res.status(401).send("El nombre de usuario no es válido")}
+        if (!user.username) {return res.status(401).send("El nombre de usuario no es válido")}
         if (user.password !== password) {return res.status(401).send("Contraseña incorrecta")}
+        if (user.userType !== userType) {return res.status(401).send("Ingrese un usario válido")}
         const userObject = res.json ({ user: user, token: createToken(user) })
             return userObject
         }
         catch{
-        return res.status(500).json({msg:error.message})}
+        return res.status(500).json({msg:'Debe registrarse'})}
         
     }
     
 }
 
 function createToken(user) {
-    const payload = { user_username: user.username, user_role: user.userType}
+    const payload = { user_username: user.username, user_password: user.password, user_role: user.userType}
     return jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '2h'})
 }
 
