@@ -7,7 +7,6 @@ const UserSchema = new Schema ({
     email: {
         type: String,
         require: true,
-    
     },
     //Nombre de usuario
     username: {

@@ -29,7 +29,7 @@ const controllerAuth = {
         try {
             const {email, username, password, userType} = req.body
             const newUser = new User({email, username, password, userType})
-            await newUser.save();
+            await newUser.create();
             const newUserObject = res.json ({ user: newUser, token: createToken(newUser) })
             return newUserObject
         } catch (error) {
