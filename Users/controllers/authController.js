@@ -1,7 +1,6 @@
 const User = require ('../models/users')
-const generateSign = require('../../middlewares/generateToken')
 const moment = require('moment')
-
+const jwt = require('jsonwebtoken')
 
 const controllerAuth = {
     test: (req, res) => {
@@ -55,6 +54,15 @@ const controllerAuth = {
         }
     
     }
+}
+
+function generateSign (user) {
+    const payload = {
+        user_username : user.username,
+        user_password : user.password
+        }
+    return jwt.sign(payload, process.env.JWT_SECRET)
+    
 }
 
 module.exports = controllerAuth
