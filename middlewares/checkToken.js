@@ -3,7 +3,7 @@ const jwt = require ('jsonwebtoken');
 
 const checkToken = (req, res, next) => {
     if (!req.headers ['authorization']) {
-        return console.log (res.json({error: 'Acceso denegado'}));
+        return console.log (res.json({error: 'Acceso denegado no tienes el token'}));
     }
     const token = req.headers['authorization'];
     
@@ -14,7 +14,7 @@ const checkToken = (req, res, next) => {
         return res.json ({error: 'El token no es correcto'});
     }
 
-    next ();
+    next (console.log('Token verificado con éxito'));
 }
 
-module.exports = {checkToken}
+module.exports = checkToken

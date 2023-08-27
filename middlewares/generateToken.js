@@ -1,25 +1,24 @@
 const jwt = require('jsonwebtoken') //TODO : 😎
-require('dotenv').config();
 
 
-const verifyToken = async (token) => {
-    try {
-        return jwt.verify(token, process.env.JWT_SECRET)
-    } catch (e) {
-        console.log('No se logra verificar token')
-        return null
-    }
-}
+// const verifyToken = async (token) => {
+//     try {
+//         const tokenVerify = jwt.verify(token, process.env.JWT_SECRET)
+//         return tokenVerify
+//     } catch (e) {
+//         console.log('No se logra verificar token')
+//         return null
+//     }
+// }
 
 const generateSign = async (user) => {
     try {
-        const token = jwt.sign ({
-            username: user.username,
-            password: user.password
-            }, process.env.JWT_SECRET,
-            {expiresIn:"12h"}
-        )
-        return token
+        const payload = {
+            user_username : user.username,
+            user_password : user.password
+        }
+        const token = jwt.sign(payload, process.env.JWT_SECRET)
+        return console.log(token)
     } catch (e) {
         console.log ('No se puede generar el token')
         return null
@@ -30,4 +29,4 @@ const generateSign = async (user) => {
 //     return jwt.decode(token, null)
 // }
 
-module.exports = {verifyToken, generateSign}
+module.exports = generateSign

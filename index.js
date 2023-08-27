@@ -26,7 +26,7 @@ app.use(cors({
 
 //Routes
 app.use ('/api', userRouter)
-app.use('/api/forum', checkAuth, forumRouter)
+app.use('/api/forum', forumRouter)
 
 app.listen (port, () =>  {
   console.log(`Mi puerto es ${port}`)
