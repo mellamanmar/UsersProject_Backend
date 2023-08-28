@@ -1,16 +1,6 @@
 const jwt = require('jsonwebtoken') //TODO : 😎
 
 
-// const verifyToken = async (token) => {
-//     try {
-//         const tokenVerify = jwt.verify(token, process.env.JWT_SECRET)
-//         return tokenVerify
-//     } catch (e) {
-//         console.log('No se logra verificar token')
-//         return null
-//     }
-// }
-
 const generateSign = async (user) => {
     try {
         const payload = {
