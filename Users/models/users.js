@@ -7,7 +7,6 @@ const UserSchema = new Schema ({
     email: {
         type: String,
         require: true,
-    
     },
     //Nombre de usuario
     username: {
@@ -26,9 +25,12 @@ const UserSchema = new Schema ({
         type: String,
         require: true,
         enum: ['admin', 'user']
-    }
+    },
 
-    // versionKey:false
+    __v: {
+        type:Number,
+        select: false
+    }
 })
 
 module.exports = mongoose.model('User', UserSchema);

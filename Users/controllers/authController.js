@@ -18,7 +18,7 @@ const controllerAuth = {
             username,
             userType,
         )
-        } catch (error) {
+        } catch {
             return res.status(500).json({msg:error.message})
         }
     },
@@ -27,32 +27,27 @@ const controllerAuth = {
         try {
             const {email, username, password, userType} = req.body
             const newUser = new User({email, username, password, userType})
-            await newUser.save()
-
-            res.send({data: newUser})
-
-        } catch (error) {
-            return res.status(500).json ({msg:'Error al crear el usuario'})
+            await newUser.save();
+            return res.json ({ user: newUser, token: createToken(newUser) })
+        } catch{
+            return res.status(500).json ({msg:"No es posible crear el usuario"})
             }
             
     },
 
     signIn: async (req, res) => {
         try{
-        const today = moment()
-        const { username, password } = req.body
+        const { username, password, userType } = req.body
         const user = await User.findOne({username})
 
-        if (!user) {return res.status(401).send("El nombre de usuario no es válido")}
+        if (!user.username) {return res.status(401).send("El nombre de usuario no es válido")}
         if (user.password !== password) {return res.status(401).send("Contraseña incorrecta")}
-            res.json ({
-                succes: 'Has ingresado',
-                token: generateSign(user)
-            })
-        } catch (error) {
-            console.log (error)
+        if (user.userType !== userType) {return res.status(401).send("Ingrese un usario válido")}
+        return res.json ({ user: user, token: createToken(user) })
         }
-    
+        catch{
+        return res.status(500).json({msg:'Debe registrarse'})}
+        
     }
 }
 
@@ -64,5 +59,11 @@ function generateSign (user) {
     return jwt.sign(payload, process.env.JWT_SECRET)
     
 }
+
+function createToken(user) {
+    const payload = { user_username: user.username, user_password: user.password, user_role: user.userType}
+    return jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '2h'})
+}
+
 
 module.exports = controllerAuth

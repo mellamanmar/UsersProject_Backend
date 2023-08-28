@@ -17,6 +17,11 @@ const PostSchema = new Schema({
         type:String,
         ref: 'User',
         require: true,
+    },
+
+    __v: {
+        type:Number,
+        select: false
     }
     
     // user: {

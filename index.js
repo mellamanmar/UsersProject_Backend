@@ -6,7 +6,6 @@ require('dotenv').config();
 const userRouter = require ('./Users/routers/routes')
 const forumRouter = require('./Forum/routers/forum')
 const checkToken = require('./middlewares/checkToken')
-const checkAuth = require('./middlewares/authToken')
 
 
 const app = express()
@@ -14,7 +13,7 @@ const port = 3000
 
 
 //Middlewares
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors({
   origin:"*",

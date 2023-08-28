@@ -2,18 +2,19 @@ const jwt = require ('jsonwebtoken');
 
 
 const checkToken = (req, res, next) => {
-    if (!req.headers ['authorization']) {
-        return res.json({error: 'Acceso denegado no tienes el token'});
-    }
-    const token = req.headers['authorization'];
-    
-    let payload
     try {
-        payload = jwt.verify(token, process.env.JWT_SECRET)
-    } catch (error){
-        return res.json ({error: 'El token no es correcto'});
-    }
+        const token = req.headers.authorization.split('.')[1]
+        if (!token) {
+            return res.status(401).json ({
+                msg: 'No tienes acceso'
+            })
+        }
+        const decoded = jwt.verify(token, process.env.JWT_SECRET, {expiresIn: '2h'})
+        console.log(decoded) 
+    } catch {
+        res.json({msg: 'Error al verificar el token'})
 
+    }
     next ();
 }
 
