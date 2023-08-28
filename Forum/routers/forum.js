@@ -7,7 +7,7 @@ const checkRoleAuth = require('../../middlewares/roleAuth');
 const checkToken = require('../../middlewares/checkToken')
 
 // Definir las rutas y sus correspondientes funciones del controlador y middlewares
-router.get ('/posts', checkToken,  controllerForum.getPosts) // Ruta para obtener todas las publicaciones
+router.get ('/posts',  controllerForum.getPosts) // Ruta para obtener todas las publicaciones
 router.get ('/:username', controllerForum.getPostsByUsername)
 router.post ('/create', controllerForum.createPost) // Ruta para crear una nueva publicación, con verificación de token
 router.delete('/delete/:id', checkRoleAuth ('Admin') , controllerForum.deletePost) // Ruta para eliminar una publicación, con verificación de token y
