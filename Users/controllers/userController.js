@@ -53,4 +53,4 @@ const controllerUser = {
 
 
 // Exportar las funciones del controlador para usarlas en otros archivos
-module.exports = { controllerUser };
+module.exports =  controllerUser ;
