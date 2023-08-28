@@ -10,7 +10,9 @@ const checkToken = require('../../middlewares/checkToken');
 router.get ('/posts', controllerForum.getPosts) // Ruta para obtener todas las publicaciones
 router.get ('/:username', controllerForum.getPostsByUsername)
 router.post ('/create', controllerForum.createPost) // Ruta para crear una nueva publicación, con verificación de token
-router.delete('/delete/:id',  checkRoleAuth ('Admin') , controllerForum.deletePost) // Ruta para eliminar una publicación, con verificación de token y
+router.delete('/delete/:id', controllerForum.deletePost) // Ruta para eliminar una publicación, con verificación de token y
 
 // Exportar el enrutador para su uso en otros archivos
 module.exports = router;
+
+//checkRoleAuth ('Admin') se eliminó la autenticación para probar el delete
