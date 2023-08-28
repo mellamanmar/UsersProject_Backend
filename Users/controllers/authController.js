@@ -18,7 +18,7 @@ const controllerAuth = {
             username,
             userType,
         )
-        } catch (error) {
+        } catch {
             return res.status(500).json({msg:error.message})
         }
     },
@@ -28,9 +28,8 @@ const controllerAuth = {
             const {email, username, password, userType} = req.body
             const newUser = new User({email, username, password, userType})
             await newUser.save();
-            const newUserObject = res.json ({ user: newUser, token: createToken(newUser) })
-            return newUserObject
-        } catch (error) {
+            return res.json ({ user: newUser, token: createToken(newUser) })
+        } catch{
             return res.status(500).json ({msg:"No es posible crear el usuario"})
             }
             
@@ -44,8 +43,7 @@ const controllerAuth = {
         if (!user.username) {return res.status(401).send("El nombre de usuario no es válido")}
         if (user.password !== password) {return res.status(401).send("Contraseña incorrecta")}
         if (user.userType !== userType) {return res.status(401).send("Ingrese un usario válido")}
-        const userObject = res.json ({ user: user, token: createToken(user) })
-            return userObject
+        return res.json ({ user: user, token: createToken(user) })
         }
         catch{
         return res.status(500).json({msg:'Debe registrarse'})}

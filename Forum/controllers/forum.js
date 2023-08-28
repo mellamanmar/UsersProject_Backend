@@ -23,7 +23,7 @@ const controllerForum ={
             })
     
             res.status(201).json({ message: 'Post created' });
-        } catch (error) {
+        } catch {
             res.status(500).json({ message: 'Error creating post' });
         }
         },     
@@ -31,11 +31,16 @@ const controllerForum ={
     getPosts :async (req, res) => {
     try {
         // Consultar y obtener todas las publicaciones desde la base de datos
-        const posts = await Post.find();
-        return res.status(200).json(posts);
-    } catch (error) {
-        return res.status(500).json({ message: 'Error al obtener las publicaciones' });
-    }
+        const title = await Post.find({});
+        const content = await Post.find({});
+        const username = await Post.find ({});
+
+        res.json (
+            title, content, username
+        )
+    } catch {
+        return res.json ({msg: 'Error al encontrar las publicaciones'})
+        }
     },
 
     getPostsByUsername: async (req,res) =>{     
@@ -45,7 +50,7 @@ const controllerForum ={
         const posts=await Post.find({ username: username });
         return res.json(posts)
         } 
-        catch (error) {
+        catch {
             return res.status(500).json({ message: 'Error al obtener las publicaciones' })              
         }
     },
@@ -60,7 +65,7 @@ const controllerForum ={
         await Post.findByIdAndDelete(id);
 
         res.status(200).json({ message: 'Post delete '});
-    } catch (error) {
+    } catch {
         res.status(500).json({ message: 'Error deleting post' });
     }
     }
