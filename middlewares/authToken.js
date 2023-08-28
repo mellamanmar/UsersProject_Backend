@@ -1,4 +1,3 @@
-const verifyToken = require('./generateToken')
 const User = require ('../Users/models/users')
 
 
@@ -22,25 +21,25 @@ const User = require ('../Users/models/users')
 //     }
 // }
 
-const checkAuth = async (req, res, next) => {
-    try {
-        //TODO: authorization: Bearer 1010101010101001010100 
-        const token = req.headers.authorization?.split('').pop() //TODO:123123213
-        const tokenData = await verifyToken(token)
-        if (tokenData._id) {
-            next()
-        } else {
-            res.status(409)
-            res.send({ error: 'Token inválido' })
-        }
-        res
+// const checkAuth = async (req, res, next) => {
+//     try {
+//         //TODO: authorization: Bearer 1010101010101001010100 
+//         const token = req.headers.authorization?.split('').pop() //TODO:123123213
+//         const tokenData = await verifyToken(token)
+//         if (tokenData._id) {
+//             next()
+//         } else {
+//             res.status(409)
+//             res.send({ error: 'Token inválido' })
+//         }
+//         res
 
-    } catch (e) {
-        console.log(e)
-        res.status(409)
-        res.send({ error: 'Algo sucedió en el middleware authToken' })
-    }
+//     } catch (e) {
+//         console.log(e)
+//         res.status(409)
+//         res.send({ error: 'Algo sucedió en el middleware authToken' })
+//     }
 
-}
+// }
 
-module.exports = checkAuth
+// module.exports = checkAuth

@@ -4,7 +4,6 @@ const express = require('express');
 const router = express.Router();
 const controllerForum = require('../controllers/forum'); 
 const checkRoleAuth = require('../../middlewares/roleAuth');
-const checkAuth = require('../../middlewares/authToken');
 const checkToken = require('../../middlewares/checkToken')
 
 // Definir las rutas y sus correspondientes funciones del controlador y middlewares
@@ -15,5 +14,3 @@ router.delete('/delete/:id', checkRoleAuth ('Admin') , controllerForum.deletePos
 
 // Exportar el enrutador para su uso en otros archivos
 module.exports = router;
-
-// checkAuth colocar en las rutas de posts, create, username
